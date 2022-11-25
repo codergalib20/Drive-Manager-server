@@ -32,9 +32,44 @@ const getAllFolders = async (req, res) => {
 
 // Get Folder Email
 const getFolderEmail = async (req, res) => {
+  console.log(req.params);
   try {
-    const { email } = req.params;
-    const folder = await Folder.find({ user: email });
+    const { email, parent } = req.params;
+    const folder = await Folder.find({ user: email, parent });
+    res.status(200).json({ data: folder });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Get folder by id
+const getFolderById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const folder = await Folder.findById(id);
+    res.status(200).json({ data: folder });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Update folder
+const updateFolder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, parent, user, path } = req.body;
+    const folder = await Folder.findByIdAndUpdate(id, req.body, { new: true });
+    res.status(200).json({ data: folder });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Delete folder
+const deleteFolder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const folder = await Folder.findByIdAndDelete(id);
     res.status(200).json({ data: folder });
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
@@ -45,4 +80,7 @@ module.exports = {
   createFolder,
   getAllFolders,
   getFolderEmail,
+  getFolderById,
+  updateFolder,
+  deleteFolder,
 };
