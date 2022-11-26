@@ -45,8 +45,8 @@ const getFolderEmail = async (req, res) => {
 // Get folder by id
 const getFolderById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const folder = await Folder.findById(id);
+    const { id, path } = req.params;
+    const folder = await Folder.findOne({ _id: id, path });
     res.status(200).json({ data: folder });
   } catch (err) {
     res.status(500).json({ error: "Internal server error" });
