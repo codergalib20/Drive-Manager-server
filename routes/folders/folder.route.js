@@ -9,10 +9,12 @@ const {
   getFolderById,
   updateFolder,
   deleteFolder,
+  getFolderByIdAndPath,
 } = require("./folder.controller");
 
 router.route("/").get(getAllFolders).post(createFolder);
 router.route("/:email/:parent").get(getFolderEmail);
+router.route("/id-path/:id/:path").get(getFolderByIdAndPath);
 router
   .route("/id/:id")
   .get(getFolderById)
