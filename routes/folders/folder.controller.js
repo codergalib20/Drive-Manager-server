@@ -16,6 +16,7 @@ const createFolder = async (req, res) => {
     const savedFolder = await newFolder.save();
     res.status(200).json({ data: savedFolder });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
